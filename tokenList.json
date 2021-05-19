@@ -1,0 +1,33 @@
+{
+    "name": "SushiSwap Token List",
+    "timestamp": "2020-11-26T00:00:00+00:00",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0
+    },
+    "logoURI": "https://lite.sushi.com/logo.png",
+    "keywords": [
+      "nomichef",
+      "default",
+      "list"
+    ],
+    "tokens": [
+      {
+        "address": "0xb1f66997a5760428d3a87d68b90bfe0ae64121cc",
+        "chainId": 1,
+        "name": "TomoChain",
+        "symbol": "TOMO",
+        "decimals": 18,
+        "logoURI": "https://luaswap.org/favicon.png"
+      },
+      {
+        "address": "0x7262fa193e9590b2e075c3c16170f3f2f32f5c74",
+        "chainId": 1,
+        "name": "Lua",
+        "symbol": "LUA",
+        "decimals": 18,
+        "logoURI": "https://lite.sushi.com/images/tokens/xSUSHI.png"
+      }
+    ]
+  }
