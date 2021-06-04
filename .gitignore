@@ -1,0 +1,7 @@
+
+.env
+node_modules/.bin/_mocha
+src/.DS_Store
+node_modules
+.vscode
+.DS_Store
