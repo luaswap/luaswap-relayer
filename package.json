@@ -11,7 +11,6 @@
     "prebuild": "rimraf dist",
     "build": "tsc",
     "typechain": "bash scripts/typechain.sh",
-    "postinstall": "yarn run typechain",
     "start": "yarn run build && node dist/index.js"
   },
   "dependencies": {
