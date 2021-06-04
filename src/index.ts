@@ -42,13 +42,13 @@ const main = async () => {
     mainnet.provider.on("block", async blockNumber => {
         Log.d("block: " + blockNumber);
         // every 12 hours
-        if (blockNumber % 2880 === 0) {
+        if (blockNumber % 10800 === 0) {
             const latest = await updateTokensAndPairs(mainnet.provider);
             tokens = latest.tokens;
             pairs = latest.pairs;
         }
         // every 1 minute
-        if (blockNumber % 4 === 0) {
+        if (blockNumber % 15 === 0) {
             try {
                 const matched = await executor.match(tokens, pairs, orders, 10000);
                 //Log.w("  " + JSON.stringify(orders) + " orders");

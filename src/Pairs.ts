@@ -58,24 +58,6 @@ class Pairs {
                 "blockNumber": null
                 },
                 {
-                "name": "Tomo Finance",
-                "address": "0xB2444519F4653831b097B388D985aB3FdD5D600e",
-                "symbol": "TAI",
-                "decimals": 18,
-                "chainId": 88,
-                "logoURI": "https://raw.githubusercontent.com/tomochain/luaswap-token-list/master/src/tokens/icons/tomochain/0xB2444519F4653831b097B388D985aB3FdD5D600e.png",
-                "blockNumber": null
-                },
-                {
-                "name": "Wrapped USD Coin",
-                "address": "0xCCA4E6302510d555B654B3EaB9c0fCB223BCFDf0",
-                "symbol": "USDC",
-                "decimals": 6,
-                "chainId": 88,
-                "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png",
-                "blockNumber": null
-                },
-                {
                 "name": "Wrapped Tether USD",
                 "address": "0x381B31409e4D220919B2cFF012ED94d70135A59e",
                 "symbol": "USDT",

@@ -9,7 +9,7 @@ const LIMIT = 20;
 export type OnCreateOrder = (hash: string) => Promise<void> | void;
 export type OnCancelOrder = (hash: string) => Promise<void> | void;
 
-const BLOCKS_PER_DAY = 400;
+const BLOCKS_PER_DAY = 21600;
 
 class Orders {
     private static async fetchCanceledHashes(provider: ethers.providers.BaseProvider) {
