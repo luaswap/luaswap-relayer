@@ -26,6 +26,9 @@ interface SettlementInterface extends ethers.utils.Interface {
     "MAX_FEE_SPLIT_NUMERATOR()": FunctionFragment;
     "cancelOrder(tuple)": FunctionFragment;
     "canceledOfHash(bytes32)": FunctionFragment;
+    "allCanceledHashes(bytes32)": FunctionFragment;
+    "numberOfAllCanceledHashes()": FunctionFragment;
+    "canceledHashesOfMaker(bytes32)": FunctionFragment;
     "factory()": FunctionFragment;
     "feeNumerator()": FunctionFragment;
     "feeSplitNumerator()": FunctionFragment;
@@ -48,6 +51,14 @@ interface SettlementInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "MAX_FEE_NUMERATOR",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allCanceledHashes",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "numberOfAllCanceledHashes",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -158,6 +169,14 @@ interface SettlementInterface extends ethers.utils.Interface {
     functionFragment: "DOMAIN_SEPARATOR",
     data: BytesLike
   ): Result;
+  encodeFunctionData(
+    functionFragment: "allCanceledHashes",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  decodeFunctionResult(
+    functionFragment: "numberOfAllCanceledHashes",
+    values?: undefined
+  ): string;
   decodeFunctionResult(
     functionFragment: "MAX_FEE_NUMERATOR",
     data: BytesLike
@@ -257,6 +276,22 @@ export class Settlement extends Contract {
       0: BigNumber;
     }>;
 
+    allCanceledHashes(
+      page: BigNumberish,
+      limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string[];
+    }>;
+
+    "allCanceledHashes(uint256,uint256)"(
+      page: BigNumberish,
+      limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string[];
+    }>;
+
     "MAX_FEE_NUMERATOR()"(
       overrides?: CallOverrides
     ): Promise<{
@@ -320,7 +355,32 @@ export class Settlement extends Contract {
     ): Promise<{
       0: boolean;
     }>;
+    numberOfAllCanceledHashes(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+    allCanceledHashes(
+      page: BigNumberish,
+      limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string[];
+    }>;
 
+    "allCanceledHashes(uint256,uint256)"(
+      page: BigNumberish,
+      limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string[];
+    }>;
+
+    "numberOfAllCanceledHashes()"(
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
     factory(
       overrides?: CallOverrides
     ): Promise<{
@@ -690,7 +750,9 @@ export class Settlement extends Contract {
     arg0: BytesLike,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
+  numberOfAllCanceledHashes(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "numberOfAllCanceledHashes()"(overrides?: CallOverrides): Promise<BigNumber>;
   owner(overrides?: CallOverrides): Promise<string>;
 
   "owner()"(overrides?: CallOverrides): Promise<string>;
@@ -929,6 +991,22 @@ export class Settlement extends Contract {
       _feeNumerator: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    allCanceledHashes(
+      page: BigNumberish,
+      limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string[];
+    }>;
+
+    "allCanceledHashes(uint256,uint256)"(
+      page: BigNumberish,
+      limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string[];
+    }>;
 
     updateFeeSplit(
       _feeSplitNumerator: BigNumberish,
@@ -1197,6 +1275,18 @@ export class Settlement extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    allCanceledHashes(
+      page: BigNumberish,
+      limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "allCanceledHashes(uint256,uint256)"(
+      page: BigNumberish,
+      limit: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;    
+    
     "MAX_FEE_SPLIT_NUMERATOR()"(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
