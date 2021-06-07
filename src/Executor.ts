@@ -111,17 +111,17 @@ class Executor {
             Log.d("args... " + JSON.stringify(args));
             const gasLimit = await contract.estimateGas.fillOrders(args);
             const gasPrice = await signer.getGasPrice();
-            // const tx = await contract.fillOrders(args, {
-            //     gasLimit: gasLimit.mul(120).div(100),
-            //     gasPrice: gasPrice.mul(120).div(100)
-            // });
-            // args.forEach(arg => {
-            //     this.pendingOrders[arg.order.hash] = tx;
-            // });
-            // tx.wait().then(() => {
-            //     args.forEach(arg => delete this.pendingOrders[arg.order.hash]);
-            // });
-            // Log.d("  tx hash: ", tx.hash);
+            const tx = await contract.fillOrders(args, {
+                gasLimit: gasLimit.mul(120).div(100),
+                gasPrice: gasPrice.mul(120).div(100)
+            });
+            args.forEach(arg => {
+                this.pendingOrders[arg.order.hash] = tx;
+            });
+            tx.wait().then(() => {
+                args.forEach(arg => delete this.pendingOrders[arg.order.hash]);
+            });
+            Log.d("  tx hash: ", tx.hash);
         }
     }
 }
