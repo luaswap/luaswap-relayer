@@ -19,7 +19,6 @@ class Orders {
         //const filter = settlement.filters.OrderCanceled(null);
         const length = (await settlement.numberOfAllCanceledHashes()).toNumber();
         const pages: number[] = [];
-        const allCancelled = await settlement.allCanceledHashes(0, LIMIT)
         for (let i = 0; i * LIMIT < length; i++) pages.push(i);
         return (await Promise.all(pages.map(async page => await settlement.allCanceledHashes(page, LIMIT))))
             .flat()
@@ -39,7 +38,6 @@ class Orders {
     static async fetch(provider: ethers.providers.BaseProvider, kovanProvider: ethers.providers.BaseProvider) {
         const settlement = SettlementFactory.connect(Settlement.address, provider);
         const canceledHashes = await Orders.fetchCanceledHashes(provider);
-        console.log('canceledHashes: ',canceledHashes)
         const hashes = await Orders.fetchHashes(kovanProvider);
         const now = Math.floor(Date.now() / 1000);
         return (
