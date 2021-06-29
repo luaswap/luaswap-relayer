@@ -34,7 +34,7 @@ const argsForOrder = async (order: Order, signer: ethers.Signer) => {
         
         return arg;
     } catch (e) {
-        Log.w("  " + JSON.stringify(arg) + " arg");
+        //Log.w("  " + JSON.stringify(arg) + " arg");
         Log.w("  " + order.hash + " will revert");
         return null;
     }
@@ -65,7 +65,6 @@ class Executor {
             const fromToken = findToken(tokens, order.fromToken);
             const toToken = findToken(tokens, order.toToken);
             const filledAmountIn = await this.filledAmountIn(order);
-
             if (fromToken && toToken && order.deadline.toNumber() * 1000 >= now && filledAmountIn.lt(order.amountIn)) {
                 const trade = Trade.bestTradeExactIn(
                     pairs,
@@ -76,10 +75,10 @@ class Executor {
                         maxHops: 3
                     }
                 )[0];
-                
+
                 if (trade) {
                     const tradeAmountOutMin = trade.minimumAmountOut(new Percent("0"));
-                    Log.w(order.hash + ": " + "order.amountOutMin: "+ deductFee(order.amountOutMin) + ", tradeAmountOutMin: "+ tradeAmountOutMin.raw.toString());
+                    //Log.w(order.hash + ": " + "order.amountOutMin: "+ (order.amountOutMin) + ", tradeAmountOutMin: "+ tradeAmountOutMin.raw.toString());
                     if (deductFee(order.amountOutMin).lt(tradeAmountOutMin.raw.toString())) {
                         executables.push({
                             ...order,
@@ -104,24 +103,32 @@ class Executor {
             )
         ).filter(arg => arg !== null);
         if (args.length > 0) {
-            Log.d("filling orders...");
-            args.forEach(arg => {
+            for (const arg of args) {
+                Log.d("filling orders...");
+                // args.forEach(arg => {
                 Log.d("  " + arg.order.hash + " (amountIn: " + arg.order.amountIn.toString() + ")");
-            });
-            Log.d("args... " + JSON.stringify(args));
-            const gasLimit = await contract.estimateGas.fillOrders(args);
-            const gasPrice = await signer.getGasPrice();
-            const tx = await contract.fillOrders(args, {
-                gasLimit: gasLimit.mul(120).div(100),
-                gasPrice: gasPrice.mul(120).div(100)
-            });
-            args.forEach(arg => {
-                this.pendingOrders[arg.order.hash] = tx;
-            });
-            tx.wait().then(() => {
-                args.forEach(arg => delete this.pendingOrders[arg.order.hash]);
-            });
-            Log.d("  tx hash: ", tx.hash);
+                
+                try {
+                    Log.d("filling ...");
+                    const gasLimit = await contract.estimateGas.fillOrder(arg);
+                    const gasPrice = await signer.getGasPrice();
+
+                    const tx = await contract.fillOrder(arg, {
+                        gasLimit: gasLimit.mul(120).div(100),
+                        gasPrice: gasPrice.mul(120).div(100)
+                    });
+      
+                    this.pendingOrders[arg.order.hash] = tx;
+
+                    tx.wait().then(() => {
+                        delete this.pendingOrders[arg.order.hash];
+                    });
+                    Log.d("  tx hash: ", tx.hash);
+                } catch (e) {
+                    //Log.w("  " + JSON.stringify(arg) + " arg");
+                    Log.d("FillOrder failed: " + arg.order.hash + ' - ' + e);
+                }
+            };
         }
     }
 }

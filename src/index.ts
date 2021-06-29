@@ -3,7 +3,7 @@ import Pairs from "./Pairs";
 import Log from "./Log";
 import Orders from "./Orders";
 import Executor from "./Executor";
-
+import "dotenv/config";
 import { Fetcher } from "@luaswap/sdk";
 import { ethers } from "ethers";
 
@@ -12,6 +12,14 @@ const kovan = Ethereum.Kovan;
 
 // tslint:disable-next-line:max-func-body-length
 const main = async () => {
+    // Log.d("fetching all orders...");
+    // const allOrders = await Orders.fetchHashes(kovan.provider);
+    // Log.d("found " + allOrders.length + " orders");
+
+    // Log.d("fetching filled orders...");
+    // const allOrdersFills = await Orders.allOrderFills(mainnet.provider, kovan.provider);
+    // Log.d("found " + allOrdersFills.length + " fill orders");
+
     Log.d("fetching pairs...");
     let { tokens, pairs } = await updateTokensAndPairs(mainnet.provider);
 
@@ -48,9 +56,9 @@ const main = async () => {
             pairs = latest.pairs;
         }
         // every 1 minute
-        if (blockNumber % 15 === 0) {
+        if (blockNumber % 60 === 0) {
             try {
-                const matched = await executor.match(tokens, pairs, orders, 10000);
+                const matched = await executor.match(tokens, pairs, orders, 160000);
                 //Log.w("  " + JSON.stringify(orders) + " orders");
                 Log.d("matched " + matched.length + " orders");
                 matched.forEach(order => {
@@ -82,6 +90,7 @@ const main = async () => {
             }
         }
     });
+
 };
 
 const updateTokensAndPairs = async (provider: ethers.providers.BaseProvider) => {

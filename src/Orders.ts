@@ -25,7 +25,7 @@ class Orders {
             .filter(hash => hash !== ethers.constants.HashZero);
     }
 
-    private static async fetchHashes(kovanProvider: ethers.providers.BaseProvider) {
+    static async fetchHashes(kovanProvider: ethers.providers.BaseProvider) {
         const orderBook = OrderBookFactory.connect(OrderBook.address, kovanProvider);
         const length = (await orderBook.numberOfAllHashes()).toNumber();
         const pages: number[] = [];
@@ -49,6 +49,46 @@ class Orders {
                         if (order.deadline.toNumber() < now) return null;
                         const filledAmountIn = await settlement.filledAmountInOfHash(hash);
                         if (order.amountIn.eq(filledAmountIn)) return null;
+                        return order;
+                    })
+            )
+        ).filter(order => !!order);
+    }
+
+    static async fetchFills(provider: ethers.providers.BaseProvider, kovanProvider: ethers.providers.BaseProvider) {
+        const settlement = SettlementFactory.connect(Settlement.address, provider);
+        const canceledHashes = await Orders.fetchCanceledHashes(provider);
+        const hashes = await Orders.fetchHashes(kovanProvider);
+        const now = Math.floor(Date.now() / 1000);
+        return (
+            await Promise.all(
+                hashes
+                    .filter(hash => !canceledHashes.includes(hash))
+                    .map(async hash => {
+                        const order = await this.fetchOrder(hash, kovanProvider);
+                        if (order.deadline.toNumber() < now) return null;
+                        const filledAmountIn = await settlement.filledAmountInOfHash(hash);
+                        if (order.amountIn.eq(filledAmountIn)) return null;
+                        return order;
+                    })
+            )
+        ).filter(order => !!order);
+    }
+
+    static async allOrderFills(provider: ethers.providers.BaseProvider, kovanProvider: ethers.providers.BaseProvider) {
+        const settlement = SettlementFactory.connect(Settlement.address, provider);
+        const canceledHashes = await Orders.fetchCanceledHashes(provider);
+        const hashes = await Orders.fetchHashes(kovanProvider);
+        const now = Math.floor(Date.now() / 1000);
+        return (
+            await Promise.all(
+                hashes
+                    .filter(hash => !canceledHashes.includes(hash))
+                    .map(async hash => {
+                        const order = await this.fetchOrder(hash, kovanProvider);
+                        const filledAmountIn = await settlement.filledAmountInOfHash(hash);
+                        //console.log('hash: '+hash+', filledAmountIn: '+filledAmountIn)
+                        if (order.amountIn.gt(filledAmountIn)) return null;
                         return order;
                     })
             )

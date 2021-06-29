@@ -74,6 +74,42 @@ class Pairs {
                 "chainId": 88,
                 "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x05D3606d5c81EB9b7B18530995eC9B29da05FaBa/logo.png",
                 "blockNumber": null
+                },
+                {
+                    "name": "Wrapped USD Coin",
+                    "address": "0xCCA4E6302510d555B654B3EaB9c0fCB223BCFDf0",
+                    "symbol": "USDC",
+                    "decimals": 6,
+                    "chainId": 88,
+                    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png",
+                    "blockNumber": null
+                },
+                {
+                    "name": "Wrapped Serum",
+                    "address": "0xc01643aC912B6a8ffC50CF8c1390934A6142bc91",
+                    "symbol": "SRM",
+                    "decimals": 6,
+                    "chainId": 88,
+                    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x476c5E26a75bd202a9683ffD34359C0CC15be0fF/logo.png",
+                    "blockNumber": null
+                },
+                {
+                    "name": "Wrapped FTX Token",
+                    "address": "0x33fa3c0c714638f12339F85dae89c42042a2D9Af",
+                    "symbol": "FTT",
+                    "decimals": 18,
+                    "chainId": 88,
+                    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9/logo.png",
+                    "blockNumber": null
+                },
+                {
+                    "name": "Wrapped BTC",
+                    "address": "0xA91895630f2DAfdc4FC5c3e32846108068c67004",
+                    "symbol": "BTC",
+                    "decimals": 8,
+                    "chainId": 88,
+                    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png",
+                    "blockNumber": null
                 }
         ]
         }
