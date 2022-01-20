@@ -22,7 +22,6 @@ class Pairs {
     }
 
     static async fetch(provider: ethers.providers.BaseProvider) {
-        const res = await fetch("https://lite.sushiswap.fi/tokens.json");
 
         const json = {
             "name": "LuaSwap Default List",

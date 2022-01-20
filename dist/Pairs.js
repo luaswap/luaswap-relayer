@@ -20,7 +20,6 @@ class Pairs {
         contract.on("Sync", () => onSync(pair));
     }
     static async fetch(provider) {
-        const res = await node_fetch_1.default("https://lite.sushiswap.fi/tokens.json");
         const json = {
             "name": "LuaSwap Default List",
             "timestamp": "2021-04-27T04:25:08.682Z",
